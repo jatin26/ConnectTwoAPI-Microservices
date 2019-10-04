@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("demo")
 public class DemoController {
 
+	@Value("${service.url}")
+	String url;
+	
 	@Autowired
 	private DemoService demoService;
 
@@ -40,10 +44,11 @@ public class DemoController {
 	public List combineData() {
 
 		//**This is the hard coded so that why i create @Bean in DemoApplication.java class**
-		
 		//RestTemplate restTemplate=new RestTemplate();
 		
-		String url = "http://localhost:8080/employee/all";
+		//**This is the hard coded URL so that's why is create the url in application.properties file**
+		//String url="http://localhost:8080/employee/all";
+		
 		// Data data=restTemplate.getForObject(url, Data.class);
 		ResponseEntity<List<Data>> claim = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Data>>() {

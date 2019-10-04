@@ -21,6 +21,9 @@ public class DemoController {
 	@Autowired
 	private DemoService demoService;
 
+	@Autowired
+	private RestTemplate restTemplate;
+
 	@PostMapping("/save")
 	public DemoData saveData(@RequestBody DemoData demoData) {
 		return demoService.save(demoData);
@@ -35,7 +38,11 @@ public class DemoController {
 
 	@GetMapping("/combineAPI")
 	public List combineData() {
-		RestTemplate restTemplate = new RestTemplate();
+
+		//**This is the hard coded so that why i create @Bean in DemoApplication.java class**
+		
+		//RestTemplate restTemplate=new RestTemplate();
+		
 		String url = "http://localhost:8080/employee/all";
 		// Data data=restTemplate.getForObject(url, Data.class);
 		ResponseEntity<List<Data>> claim = restTemplate.exchange(url, HttpMethod.GET, null,

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("demo")
+@RefreshScope
 public class DemoController {
 
 	@Value("${service.url}")
@@ -41,7 +43,7 @@ public class DemoController {
 	}
 
 	@GetMapping("/combineAPI")
-	public List combineData() {
+	public List<Object> combineData() {
 
 		//**This is the hard coded so that why i create @Bean in DemoApplication.java class**
 		//RestTemplate restTemplate=new RestTemplate();
@@ -55,7 +57,7 @@ public class DemoController {
 				});
 		List<Data> list = claim.getBody();
 		List<DemoData> list2 = getData();
-		List combineList = new ArrayList();
+		List<Object> combineList = new ArrayList<>();
 		combineList.addAll(list);
 		combineList.addAll(list2);
 		return combineList;
